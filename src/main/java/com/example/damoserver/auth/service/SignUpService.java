@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class SignUpService {
     private final AccountService accountService;
-    private final PasswordEncoder passwordEncoder; //인텔리제이 오류인듯?
+    private final PasswordEncoder passwordEncoder; //인텔리제이 오류인듯? security config에서 bean 등록하면 해결될것임
 
     //signup request dto 파라미터로 받아서 유효하면 create
     @Transactional
     public Account signUp(SignUpRequest request) {
-        if (accountService.existsByUsername(request.name())) {
+        if (accountService.existsByName(request.name())) {
             throw new RuntimeException("Username already exists");
         }
         return accountService.create(CreateAccountRequest.from(request, passwordEncoder));

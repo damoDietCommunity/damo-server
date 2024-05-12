@@ -21,19 +21,19 @@ public class AccountService {
     }
 
     //id로 account 찾기
-    public Account findByUsername(String username) {
-        return accountRepository.findByUsername(username).orElseThrow(()->new RuntimeException("account not found"));
+    public Account findByUsername(String name) {
+        return accountRepository.findByName(name).orElseThrow(()->new RuntimeException("account not found"));
     }
 
     //id로 account 존재하는지
-    public boolean existsByUsername(String username) {
-        return accountRepository.findByUsername(username).isPresent();
+    public boolean existsByName(String name) {
+        return accountRepository.findByName(name).isPresent();
     }
 
     //account create for signup
     public Account create(CreateAccountRequest request) {
         //id 중복 check
-        if (existsByUsername(request.name()))
+        if (existsByName(request.name()))
             throw new RuntimeException("account already exists");
         Account account = Account.from(request); //역할은 user 고정
         return accountRepository.save(account);

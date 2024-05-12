@@ -1,6 +1,7 @@
 package com.example.damoserver.account.entity;
 
 import com.example.damoserver.account.dto.request.CreateAccountRequest;
+import com.example.damoserver.comment.entity.Comment;
 import com.example.damoserver.post.entity.Post;
 import com.example.damoserver.profile.entity.Profile;
 import jakarta.persistence.*;
@@ -37,14 +38,19 @@ public class Account {
     private List<Post> posts = new ArrayList<>();
 
     //chat message 넣기
+
     //comments 넣기
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     @Builder
-    public Account(String name, String password, Role role, Profile profile, List<Post> posts) {
+    public Account(String name, String password, Role role, Profile profile, List<Post> posts, List<Comment> comments) {
         this.name = name;
         this.password = password;
         this.role = role;
         this.profile = profile;
         this.posts = posts;
+        this.comments = comments;
     }
 
     public static Account from(CreateAccountRequest request) {
