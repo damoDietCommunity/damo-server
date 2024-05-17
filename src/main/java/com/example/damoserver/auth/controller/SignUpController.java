@@ -1,5 +1,6 @@
 package com.example.damoserver.auth.controller;
 
+import com.example.damoserver.auth.dto.request.EmailVerificationCodeRequest;
 import com.example.damoserver.auth.dto.request.SignUpRequest;
 import com.example.damoserver.auth.dto.response.SignUpResponse;
 import com.example.damoserver.auth.service.SignUpService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth/signup")
@@ -29,6 +32,19 @@ public class SignUpController {
     public ResponseEntity<SignUpResponse> signUp
             (@RequestBody @Valid SignUpRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(SignUpResponse.from(signUpService.signUp(request)));
+                .body(signUpService.signUp(request));
+    }
+    /**
+     * 이메일 인증 코드 전송
+     *
+     * @param request 이메일 인증 코드 전송 요청
+     */
+    @PostMapping("/email/send")
+    public ResponseEntity<?> sendEmailVerificationCodeForSignUp(
+            @RequestBody @Valid EmailVerificationCodeRequest request) {
+        String email = request.email();
+        signUpService.sendEmailVerificationCodeForSignUp(email);
+
+        return ResponseEntity.ok().body("Code 전송");
     }
 }

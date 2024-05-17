@@ -6,6 +6,7 @@ import com.example.damoserver.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -36,6 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
+                //.oauth2Login(Customizer.withDefaults());
 
         http
                 .authorizeHttpRequests((authorize) -> authorize
@@ -44,14 +46,16 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthorizationFilter(jwtTokenProvider, accountService),
                         UsernamePasswordAuthenticationFilter.class)
                 .logout((logout) -> logout
-                        .logoutSuccessUrl("/auth/login")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true))
+                //jwt를 통해 인증 인가하므로 세션 stateless로 설정
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
         return http.build();
     }
+
 
     /*
     @Bean //배포할 때 cors 설정하기

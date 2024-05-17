@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -18,3 +18,33 @@ spring:
       host: localhost
       port: 6379
 
+  verification-code:
+    length: 6
+    expire-time: 300000
+
+  mail:
+    protocol: smtp
+    host: smtp.gmail.com
+    port: 587
+    username: tae195611@gmail.com
+    password: rfwx gyvl jgsj xguc
+    properties:
+      smtp.auth: true
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+    test-connection: true
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: 375511153376-upphck32ip2hl7o9h8867f7u5flje9hv.apps.googleusercontent.com
+#            client-secret: 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
+#            redirect-uri: https://localhost:8080/auth/login/oauth2/code/google
+#            scope:
+#              - email
+#              - profile

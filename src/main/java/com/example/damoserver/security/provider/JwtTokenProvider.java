@@ -118,6 +118,7 @@ public class JwtTokenProvider {
     }
     public String resolveRefreshToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Refresh-Token");
+        //값으로 앞에 Bearer가 없어도 되면 startsWith(BEARER_TYPE) 뺴기
         if (bearerToken != null && bearerToken.startsWith(BEARER_TYPE)) {
             return bearerToken.replace(BEARER_TYPE, "").trim();
         }

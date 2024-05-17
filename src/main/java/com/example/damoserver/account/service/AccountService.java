@@ -30,6 +30,9 @@ public class AccountService {
         return accountRepository.findByName(name).isPresent();
     }
 
+    public boolean existsByEmail(String email) {
+        return accountRepository.findByEmail(email).isPresent();
+    }
     //account create for signup
     public Account create(CreateAccountRequest request) {
         //id 중복 check

@@ -5,6 +5,7 @@ import com.example.damoserver.comment.entity.Comment;
 import com.example.damoserver.post.entity.Post;
 import com.example.damoserver.profile.entity.Profile;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
@@ -27,6 +29,9 @@ public class Account {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "email")
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -44,9 +49,10 @@ public class Account {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Account(String name, String password, Role role, Profile profile, List<Post> posts, List<Comment> comments) {
+    public Account(String name, String password, Role role, Profile profile, String email,List<Post> posts, List<Comment> comments) {
         this.name = name;
         this.password = password;
+        this.email = email;
         this.role = role;
         this.profile = profile;
         this.posts = posts;
@@ -56,6 +62,7 @@ public class Account {
     public static Account from(CreateAccountRequest request) {
         return Account.builder()
                 .name(request.name())
+                .email(request.email())
                 .password(request.password())
                 .role(Role.ROLE_USER) //user로 고정
                 .build();
