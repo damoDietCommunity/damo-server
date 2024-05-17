@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
+
     private static final long ACCESS_TOKEN_EXPIRATION_TIME = 30 * 60 * 1000;
 
     @Getter
@@ -117,6 +118,7 @@ public class JwtTokenProvider {
     }
     public String resolveRefreshToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Refresh-Token");
+        //값으로 앞에 Bearer가 없어도 되면 startsWith(BEARER_TYPE) 뺴기
         if (bearerToken != null && bearerToken.startsWith(BEARER_TYPE)) {
             return bearerToken.replace(BEARER_TYPE, "").trim();
         }
