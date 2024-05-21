@@ -6,6 +6,7 @@ import com.example.damoserver.comment.entity.Comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +26,6 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
     private String content;
 
     /*
@@ -47,4 +47,19 @@ public class Post extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
+
+    @Builder
+    public Post(String title, String content, List<String> imageUrls, Account account) {
+        this.title = title;
+        this.content = content;
+        this.imageUrls = imageUrls;
+        this.account = account;
+    }
+
+    public void update(String title, String content, List<String> imageUrls) {
+        this.title = title;
+        this.content = content;
+        this.imageUrls = imageUrls;
+    }
 }
