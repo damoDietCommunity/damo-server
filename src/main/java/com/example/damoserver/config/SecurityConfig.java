@@ -6,7 +6,6 @@ import com.example.damoserver.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,17 +31,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
-                //.oauth2Login(Customizer.withDefaults());
 
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**", "/**").permitAll())
-                        //.anyRequest().authenticated())
+                        .requestMatchers("/auth/**", "/","/posts").permitAll()
+                        .requestMatchers("/mypage/**").authenticated())
                 .addFilterBefore(new JwtAuthorizationFilter(jwtTokenProvider, accountService),
                         UsernamePasswordAuthenticationFilter.class)
                 .logout((logout) -> logout

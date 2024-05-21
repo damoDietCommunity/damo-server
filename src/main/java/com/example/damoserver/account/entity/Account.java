@@ -44,7 +44,6 @@ public class Account {
 
     //chat message 넣기
 
-    //comments 넣기
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
