@@ -29,12 +29,8 @@ public class PostService {
 
     @Transactional
     public PostResponse createPost(CreatePostRequest createPostRequest, Account account) {
-        Post post = Post.builder()
-                .title(createPostRequest.title())
-                .content(createPostRequest.content())
-                .account(account)
-                .imageUrls(createPostRequest.imageUrls())
-                .build();
+
+        Post post = CreatePostRequest.from(createPostRequest, account);
 
         postRepository.save(post);
         return PostResponse.from(post);
@@ -55,7 +51,7 @@ public class PostService {
             throw new RuntimeException("Unauthorized access");
         }
 
-        post.update(updatePostRequest.title(), updatePostRequest.content(), updatePostRequest.imageUrls());
+        post.update(updatePostRequest.title(), updatePostRequest.content(), updatePostRequest.images());
 
         return PostResponse.from(post);
     }

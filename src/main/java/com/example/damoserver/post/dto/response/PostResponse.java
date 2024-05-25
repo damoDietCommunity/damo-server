@@ -2,6 +2,7 @@ package com.example.damoserver.post.dto.response;
 
 import com.example.damoserver.comment.entity.Comment;
 import com.example.damoserver.post.entity.Post;
+import com.example.damoserver.post.entity.PostImage;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,11 +11,12 @@ public record PostResponse(
         Long postId,
         String title,
         String content,
-        List<String> imageUrls,
+        List<PostImage> images,
         String authorName,
         List<Comment> comments,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
+        //PostImage thumbnail
 ) {
     //authorname = account > profile > nickName
     public static PostResponse from(Post post) {
@@ -26,7 +28,7 @@ public record PostResponse(
                 post.getPostId(),
                 post.getTitle(),
                 post.getContent(),
-                post.getImageUrls(),
+                post.getImages(),
                 authorName,
                 post.getComments(),
                 post.getCreatedAt(),
