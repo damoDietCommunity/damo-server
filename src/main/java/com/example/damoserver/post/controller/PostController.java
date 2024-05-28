@@ -7,6 +7,7 @@ import com.example.damoserver.post.dto.request.UpdatePostRequest;
 import com.example.damoserver.post.dto.response.PostResponse;
 import com.example.damoserver.post.service.PostService;
 import com.example.damoserver.security.details.PrincipalDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +49,10 @@ public class PostController {
     public ResponseEntity<PostResponse> updatePost(
             @PathVariable Long postId,
             @AuthenticationPrincipal PrincipalDetails principalDetails,
-            @RequestBody UpdatePostRequest updatePostRequest
+            @RequestBody @Valid UpdatePostRequest updatePostRequest
     ) {
         Account account = principalDetails.getAccount();
+
         return ResponseEntity.status(HttpStatus.OK)
                         .body(postService.updatePost(postId, updatePostRequest, account));
     }

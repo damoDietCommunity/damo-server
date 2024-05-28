@@ -49,11 +49,11 @@ public class CommentService {
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new RuntimeException("Comment not found"));
 
-        if (!comment.getPost().equals(post)) {
+        if (!comment.getPost().getPostId().equals(post.getPostId())) {
             throw new RuntimeException("Comment not belong to this post");
         }
 
-        if (!comment.getAccount().equals(account)) {
+        if (!comment.getAccount().getAccountId().equals(account.getAccountId())) {
             throw new RuntimeException("Unauthorized to delete comment");
         }
 

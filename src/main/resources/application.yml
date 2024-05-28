@@ -1,6 +1,8 @@
+server:
+  port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/damo_local_db
+    url: jdbc:postgresql://localhost:50241/damo_local_db
     username: postgres
     password: 1234
     driver-class-name: org.postgresql.Driver
@@ -36,15 +38,3 @@ spring:
             enable: true
             required: true
     test-connection: true
-
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            client-id: 375511153376-upphck32ip2hl7o9h8867f7u5flje9hv.apps.googleusercontent.com
-#            client-secret: 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
-#            redirect-uri: https://localhost:8080/auth/login/oauth2/code/google
-#            scope:
-#              - email
-#              - profile

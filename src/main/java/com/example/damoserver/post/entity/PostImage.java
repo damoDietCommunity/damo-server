@@ -29,4 +29,11 @@ public class PostImage{
         this.post = post;
     }
 
+    public static PostImage of(Post post, String imageUrl) {
+        return PostImage.builder()
+                .post(post)
+                .imageUrl(imageUrl)
+                .build();
+    }
+
 }
