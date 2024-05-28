@@ -32,9 +32,10 @@ public class Profile {
     private Account account;
 
     @Builder
-    public Profile(String nickName, String profileImage) {
+    public Profile(String nickName, String profileImage, Account account) {
         this.nickName = nickName;
         this.profileImage = profileImage;
+        this.account = account;
     }
 
     public void update(EditProfileRequest editProfileRequest) {

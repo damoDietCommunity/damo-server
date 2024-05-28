@@ -35,7 +35,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(postResponse);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<PostResponse> createPost(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @RequestBody CreatePostRequest createPostRequest){

@@ -1,11 +1,11 @@
 package com.example.damoserver.account.entity;
 
 import com.example.damoserver.account.dto.request.CreateAccountRequest;
+import com.example.damoserver.chat.entity.Chat;
 import com.example.damoserver.comment.entity.Comment;
 import com.example.damoserver.post.entity.Post;
 import com.example.damoserver.profile.entity.Profile;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

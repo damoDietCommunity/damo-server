@@ -6,6 +6,7 @@ import com.example.damoserver.security.provider.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -38,8 +39,10 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**", "/","/posts").permitAll()
-                        .requestMatchers("/mypage/**").authenticated())
+                        .requestMatchers("/auth/**", "/","/posts/**","/ws/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/posts/**").authenticated()
+                        .requestMatchers("/swagger-ui/index.html","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/posts/create").authenticated())
                 .addFilterBefore(new JwtAuthorizationFilter(jwtTokenProvider, accountService),
                         UsernamePasswordAuthenticationFilter.class)
                 .logout((logout) -> logout

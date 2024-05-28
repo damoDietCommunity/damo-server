@@ -8,8 +8,9 @@ public record EditProfileRequest(
         @NotNull String nickName,
         String profileImage
 ) {
-    public Profile toEntity() {
+    public Profile toEntity(Account account) {
         return Profile.builder()
+                .account(account)
                 .nickName(nickName)
                 .profileImage(profileImage)
                 .build();
