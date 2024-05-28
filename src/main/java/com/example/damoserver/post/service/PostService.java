@@ -47,11 +47,11 @@ public class PostService {
     public PostResponse updatePost(Long postId, UpdatePostRequest updatePostRequest, Account account) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new RuntimeException("Post not found"));
 
-        if (!post.getAccount().equals(account)) {
+        if (!post.getAccount().getAccountId().equals(account.getAccountId())) {
             throw new RuntimeException("Unauthorized access");
         }
 
-        post.update(updatePostRequest.title(), updatePostRequest.content(), updatePostRequest.images());
+        post.update(updatePostRequest);
 
         return PostResponse.from(post);
     }

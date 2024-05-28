@@ -1,38 +1,34 @@
 package com.example.damoserver.chat.controller;
 
-import com.example.damoserver.account.entity.Account;
-import com.example.damoserver.chat.dto.request.ChatRequest;
-import com.example.damoserver.chat.dto.response.ChatResponse;
-import com.example.damoserver.chat.service.ChatService;
-import com.example.damoserver.profile.entity.Profile;
-import com.example.damoserver.security.details.PrincipalDetails;
+import com.example.damoserver.chat.entity.Chat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final ChatService chatService;
+    private final SimpMessageSendingOperations messagingTemplate;
 
-    private static final String DEFAULT_CHAT_ROOM = "public";
 
     @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/" + DEFAULT_CHAT_ROOM)
-    public ChatResponse sendMessage(@AuthenticationPrincipal PrincipalDetails principalDetails, ChatRequest chatRequest) {
-        Account account = principalDetails.getAccount();
-        Profile profile = account.getProfile();
-
-        return ChatResponse.of(profile.getNickName(),
-                profile.getProfileImage(),
-                chatRequest.content(),
-                LocalDateTime.now());
+    @SendTo("/topic/public")
+    public Chat sendMessage(@Payload Chat chat) {
+        return chat;
     }
 
+    @MessageMapping("/chat.addUser")
+    @SendTo("/topic/public")
+    public Chat addUser(
+            @Payload Chat chat,
+            SimpMessageHeaderAccessor headerAccessor
+    ) {
+        headerAccessor.getSessionAttributes().put("username", chat.getSender());
+        return chat;
+    }
 }

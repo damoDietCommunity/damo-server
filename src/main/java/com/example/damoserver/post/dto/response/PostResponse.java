@@ -16,13 +16,14 @@ public record PostResponse(
         List<Comment> comments,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
-        //PostImage thumbnail
 ) {
+
     //authorname = account > profile > nickName
     public static PostResponse from(Post post) {
         String authorName = post.getAccount().getProfile() != null
                 ? post.getAccount().getProfile().getNickName()
                 : post.getAccount().getName();
+
 
         return new PostResponse(
                 post.getPostId(),

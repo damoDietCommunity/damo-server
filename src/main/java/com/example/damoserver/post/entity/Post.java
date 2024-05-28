@@ -3,6 +3,7 @@ package com.example.damoserver.post.entity;
 import com.example.damoserver.account.entity.Account;
 import com.example.damoserver.base.BaseTimeEntity;
 import com.example.damoserver.comment.entity.Comment;
+import com.example.damoserver.post.dto.request.UpdatePostRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -47,8 +48,12 @@ public class Post extends BaseTimeEntity {
         this.account = account;
     }
 
-    public void update(String title, String content, List<PostImage> images) {
-        this.title = title;
-        this.content = content;
-        this.images = images;    }
+    public void update(UpdatePostRequest updatePostRequest) {
+        this.title = updatePostRequest.title();
+        this.content = updatePostRequest.content();
+        this.images.clear();
+        this.images.addAll(updatePostRequest.images().stream()
+                .map(image -> PostImage.of(this, image.getImageUrl()))
+                .toList());
+    }
 }

@@ -31,6 +31,11 @@ public class ProfileService {
         return ProfileResponse.of(profile);
     }
 
+    public ProfileResponse getProfileByAccount(Account account) {
+        Profile profile = profileRepository.findByAccount(account);
+        return ProfileResponse.of(profile);
+    }
+
     public boolean isProfileExistByAccount(Account account) {
         return profileRepository.existsByAccount(account);
     }

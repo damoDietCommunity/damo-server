@@ -8,15 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Chat extends BaseTimeEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_id")
-    private Long chatId;
 
     @Enumerated(EnumType.STRING)
     private ChatType chatType;
@@ -25,19 +19,9 @@ public class Chat extends BaseTimeEntity {
 
     private String sender;
 
-    @Column(name = "profile_image")
-    private String profileImage;
-
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
     @Builder
-    public Chat(ChatType chatType, String message, String sender,String profileImage ,Account account) {
+    public Chat(ChatType chatType, String sender) {
         this.chatType = chatType;
-        this.message = message;
         this.sender = sender;
-        this.profileImage = profileImage;
-        this.account = account;
     }
 }

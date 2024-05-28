@@ -9,4 +9,5 @@ public record UpdatePostRequest(
         String content,
         List<PostImage> images
 ) {
+    
 }

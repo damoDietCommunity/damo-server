@@ -1,8 +1,12 @@
+server:
+  port: ${SPRING_PORT}
+  servlet:
+    context-path: ${BASE_PATH}
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/damo_local_db
-    username: postgres
-    password: 1234
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -11,12 +15,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   jwt:
-    secret: c3ByaW5nYm9vdC1qd3QtdHV0b3JpYWwtc3ByaW5nYm9vdC1qd3QtdHV0b3JpYWwtc3ByaW5nYm9vdC1qd3QtdHV0b3JpYWwQ
+    secret: ${JWT_SECRET}
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
 
   verification-code:
     length: 6
@@ -25,9 +30,9 @@ spring:
   mail:
     protocol: smtp
     host: smtp.gmail.com
-    port: 587
-    username: tae195611@gmail.com
-    password: rfwx gyvl jgsj xguc
+    port: ${GMAIL_PORT}
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD}
     properties:
       smtp.auth: true
       mail:
@@ -36,15 +41,3 @@ spring:
             enable: true
             required: true
     test-connection: true
-
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            client-id: 375511153376-upphck32ip2hl7o9h8867f7u5flje9hv.apps.googleusercontent.com
-#            client-secret: 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
-#            redirect-uri: https://localhost:8080/auth/login/oauth2/code/google
-#            scope:
-#              - email
-#              - profile
