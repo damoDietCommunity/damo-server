@@ -39,7 +39,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**", "/","/posts/**","/ws/**").permitAll()
+                        .requestMatchers("/auth/**", "/","/posts/**","profile/**","/mypage","/ws/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/posts/**").authenticated()
                         .requestMatchers("/swagger-ui/index.html","/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/posts/create").authenticated())

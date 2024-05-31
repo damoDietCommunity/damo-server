@@ -27,7 +27,7 @@ public class Profile {
     private String profileImage;
 
     //기본 이미지 상수
-    private static final String DEFAULT_PROFILE_IMAGE_URL = "/path/to/default.png"; // 실제 기본 이미지 URL로 변경
+    private static final String DEFAULT_PROFILE_IMAGE_URL = "/path/to/storage/images/default.png"; // 실제 기본 이미지 URL로 변경
 
     //프로필의 계정
     @OneToOne(cascade = CascadeType.REMOVE)

@@ -11,6 +11,10 @@ services:
       - database
     ports:
       - ${SPRING_PORT}:${SPRING_PORT}
+    environment:
+      - STORAGE_PATH=${STORAGE_PATH}
+    volumes:
+      - damo-storage:${STORAGE_PATH}
     restart: always
 
   database:
@@ -43,3 +47,4 @@ services:
 volumes:
   damo-database:
   damo-redis:
+  damo-storage:

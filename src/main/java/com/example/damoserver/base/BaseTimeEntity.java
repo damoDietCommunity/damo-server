@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 public class BaseTimeEntity {
+
     @CreatedDate
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;

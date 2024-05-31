@@ -18,9 +18,13 @@ public record MypageResponse(
                 ? account.getProfile().getNickName()
                 : account.getName();
 
-        String profileImage = account.getProfile().getProfileImage() != null
-                ? account.getProfile().getProfileImage()
-                : Profile.getDefaultProfileImageUrl();
+        String profileImage;
+
+        if (account.getProfile() != null && account.getProfile().getProfileImage() != null) {
+            profileImage = account.getProfile().getProfileImage();
+        } else {
+            profileImage = Profile.getDefaultProfileImageUrl();
+        }
 
         List<MyPostResponse> myPostResponses = account.getPosts().stream()
                 .map(MyPostResponse::from)

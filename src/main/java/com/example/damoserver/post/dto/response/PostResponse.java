@@ -1,6 +1,6 @@
 package com.example.damoserver.post.dto.response;
 
-import com.example.damoserver.comment.entity.Comment;
+import com.example.damoserver.comment.dto.response.CommentResponse;
 import com.example.damoserver.post.entity.Post;
 import com.example.damoserver.post.entity.PostImage;
 
@@ -13,7 +13,7 @@ public record PostResponse(
         String content,
         List<PostImage> images,
         String authorName,
-        List<Comment> comments,
+        List<CommentResponse> comments,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
@@ -24,6 +24,9 @@ public record PostResponse(
                 ? post.getAccount().getProfile().getNickName()
                 : post.getAccount().getName();
 
+        List<CommentResponse> commentResponses = post.getComments().stream()
+                .map(CommentResponse::from)
+                .toList();
 
         return new PostResponse(
                 post.getPostId(),
@@ -31,7 +34,7 @@ public record PostResponse(
                 post.getContent(),
                 post.getImages(),
                 authorName,
-                post.getComments(),
+                commentResponses,
                 post.getCreatedAt(),
                 post.getUpdateAt()
         );
