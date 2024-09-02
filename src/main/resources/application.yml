@@ -1,0 +1,43 @@
+server:
+  port: ${SPRING_PORT}
+  servlet:
+    context-path: ${BASE_PATH}
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  jwt:
+    secret: ${JWT_SECRET}
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
+  verification-code:
+    length: 6
+    expire-time: 300000
+
+  mail:
+    protocol: smtp
+    host: smtp.gmail.com
+    port: ${GMAIL_PORT}
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD}
+    properties:
+      smtp.auth: true
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+    test-connection: true
